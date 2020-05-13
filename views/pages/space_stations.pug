@@ -1,0 +1,41 @@
+extends ../layout
+
+block content
+    h3 Space Stations
+    form(class="form-inline")
+        div(class="form-group")
+            label ID
+            input(type="number" class="form-control" id="inputId")
+        div(class="form-group")
+            label Number
+            input(type="text" class="form-control" id="inputNumber")
+        div(class="form-group")
+            label Necessity
+            input(type="number" class="form-control" id="inputNecessity")
+        div(class="form-group")
+            label Capacity
+            input(type="number" class="form-control" id="inputCapacity")
+        button(type="submit" class="btn btn-primary" id="createUserButton") Create passenger
+    table(id="spaceStationsList" class="table table-bordered table-hover")
+        thead
+            th ID
+            th Number
+            th Necessity
+            th Capacity
+            th Delete
+        tbody
+    pre(id="spaceStationInfo")
+        strong ID: 
+        span(id="spaceStationInfoId")
+        br
+        strong Number:
+        span(id="spaceStationInfoNumber")
+        br
+        strong Necessity:
+        span(id="spaceStationInfoNecessity")
+        br
+        strong Capacity:
+        span(id="spaceStationInfoCapacity")
+
+block append scripts
+    script(src='/public/js/space_stations.js')

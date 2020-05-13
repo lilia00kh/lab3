@@ -1,0 +1,42 @@
+extends ../layout
+
+block content
+    h3 Cargos
+    form(class="form-inline")
+        div(class="form-group")
+            label ID
+            input(type="number" class="form-control" id="inputId")
+        div(class="form-group")
+            label Code
+            input(type="number" class="form-control" id="inputCode")
+        div(class="form-group")
+            label Name
+            input(type="text" class="form-control" id="inputName")
+        div(class="form-group")
+            label Mass
+            input(type="number" class="form-control" id="inputMass")
+        button(type="submit" class="btn btn-primary" id="createCargoButton") Create Cargo
+    table(id="cargosList" class="table table-bordered table-hover")
+        thead
+            th ID
+            th Code
+            th Name
+            th Mass
+            th Delete
+        tbody
+    pre(id="cargoInfo")
+        strong ID:
+        span(id="cargoInfoId")
+        br
+        strong Code:
+        span(id="cargoInfoCode")
+        br
+        strong Name:
+        span(id="cargoInfoName")
+        br
+        strong Mass:
+        span(id="cargoInfoMass")
+        br
+
+block append scripts
+    script(src='/public/js/cargos.js')

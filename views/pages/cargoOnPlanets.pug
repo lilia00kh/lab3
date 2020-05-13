@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+    h3 Cargo on Planets
+    form(class="form-inline")
+        div(class="form-group")
+            label ID
+            input(type="number" class="form-control" id="inputId")
+        div(class="form-group")
+            label Planet
+            input(type="text" class="form-control" id="inputPlanet")
+        div(class="form-group")
+            label Cargo
+            input(type="number" class="form-control" id="inputCargo")
+        button(type="submit" class="btn btn-primary" id="createCargoOnPlanetButton") Create Cargo on Planet
+    table(id="cargoOnPlanetsList" class="table table-bordered table-hover")
+        thead
+            th ID
+            th Planet
+            th Cargo
+            th Delete
+        tbody
+    pre(id="cargoOnPlanetInfo")
+        strong ID:
+        span(id="cargoOnPlanetInfoId")
+        br
+        strong Planet:
+        span(id="cargoOnPlanetInfoPlanet")
+        br
+        strong Cargo:
+        span(id="cargoOnPlanetInfoCargo")
+        br
+
+block append scripts
+    script(src='/public/js/cargoOnPlanets.js')
