@@ -24,27 +24,81 @@ router.get('/:id', function (req, res) {
 router.post('/', function (req, res) {
     var db = req.db;
     var collection = db.get('cargoOnStations');
-    collection.findOne({ id: req.body.id }, {}, function (e, docs) {
+    var spaceStations = db.get('space_stations');
+    var cargos= db.get('cargos');
+    let result={};
+    let b = true
+
+
+
+    spaceStations.findOne({ id: req.body.spaceStation }, {}, function (e, docs) {
         return !!docs;
     }).then(function(cargoOnStationExists) {
-        if (cargoOnStationExists) {
-            res.send(`Cargo on Station with id ${req.body.id} already exists`);
-        } else {
-            var cargoOnStation = {
-                id: req.body.id,
-                spaceStation: req.body.spaceStation,
-                cargo: req.body.cargo
-            };
-            collection.insert(cargoOnStation, function (e, docs) {
-                if (e) {
-                    res.send(e);
-                } else {
-                    // res.redirect(`/${cargo_on_Stations.id}`);
-                    res.send(`Successfully created cargo on Station [${cargoOnStation.id}] ${cargoOnStation.spaceStation} ${cargoOnStation.cargo})`);
-                }
-            });
+            if (cargoOnStationExists) {
+                cargos.findOne({ id: req.body.cargo }, {}, function (e, docs) {
+                    return !!docs;
+                }).then(function(cargoOnStationExists) {
+                    if (cargoOnStationExists) {
+                        collection.findOne({ id: req.body.id }, {}, function (e, docs) {
+                            return !!docs;
+                        }).then(function(cargoOnStationExists) {
+                            if (cargoOnStationExists) {
+                                res.send(`Вантаж на станції з id ${req.body.id} вже існує`);
+                            } else {
+                                collection.find({}).then((docs) => {
+                                    docs.forEach((value) => {
+                                        result[value.spaceStation] = result[value.spaceStation] + 1 || 1;
+
+                                    });
+
+                                });
+
+                                spaceStations.find({}).then((docs) => {
+                                    docs.forEach((value)=> {
+
+                                        for (let key in result) {
+
+                                            if (value.id==req.body.spaceStation && value.id== key && +value.capacity <= result[key] && +value.necessity*1.2 <= result[key] ) {
+                                                b=false;
+                                                break;
+                                            }
+
+                                        }
+                                    })
+                                    if(b) {
+                                        var cargoOnStation = {
+                                            id: req.body.id,
+                                            spaceStation: req.body.spaceStation,
+                                            cargo: req.body.cargo
+                                        };
+                                        collection.insert(cargoOnStation, function (e, docs) {
+                                            if (e) {
+                                                res.send(e);
+                                            } else {
+                                                // res.redirect(`/${cargo_on_Stations.id}`);
+                                                res.send(`Успішно створений вантаж на станції з id ${cargoOnStation.id}`);
+                                            }
+                                        });
+                                    }
+                                    else{
+                                        res.send(`На станції з id ${req.body.spaceStation} немає місця для вантажу!`);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else
+                    {
+                        res.send(`Вантажу з id ${req.body.cargo} не існує`);
+                    }})
+            }
+            else
+            {
+                res.send(`Станції з id ${req.body.spaceStation} не існує`);
+            }
         }
-    });
+    );
+
 });
 
 // PUT /cargo_on_Stations

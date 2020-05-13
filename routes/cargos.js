@@ -11,13 +11,36 @@ router.get('/', function (req, res) {
 });
 
 // GET /cargos/{id}
+
 router.get('/:id', function (req, res) {
     var db = req.db;
     var collection = db.get('cargos');
-    var cargoId = req.params.id;
-    collection.findOne({id: cargoId}, {}, function (e, docs) {
-        res.json(docs);
+    var cargosId = req.params.id;
+    console.log(cargosId);
+    collection.findOne({ id: cargosId }).then(function(cargosExists) {
+        if (cargosExists) {
+            res.send(`Вантаж з id ${cargosId} існує`);
+        } else{
+            res.send(`Вантаж з id ${cargosId} не існує`);
+        }
+
     });
+});
+
+router.post('/:id', function (req, res) {
+    var db = req.db;
+    var collection = db.get('cargos');
+    var cargosId = req.params.id;
+    console.log(cargosId);
+    var cargos = {
+        id: req.body.id,
+        code: req.body.code,
+        name: req.body.name,
+        mass: req.body.mass,
+    }
+    collection.update({ id:cargosId  }, { $set: { code: cargos.code, name:cargos.name,mass:cargos.mass } }).then((result) => {
+        res.send(`Успішно оновленовантаж з id ${cargos.id} `);
+    })
 });
 
 // POST /cargos
@@ -28,7 +51,7 @@ router.post('/', function (req, res) {
         return !!docs;
     }).then(function(cargoExists) {
         if (cargoExists) {
-            res.send(`cargo with id ${req.body.id} already exists`);
+            res.send(`Вантаж з id ${req.body.id} вже існує`);
         } else {
             var cargo = {
                 id: req.body.id,
@@ -41,7 +64,7 @@ router.post('/', function (req, res) {
                     res.send(e);
                 } else {
                     // res.redirect(`/${cargo.id}`);
-                    res.send(`Successfully created cargo [${cargo.id}] ${cargo.code} ${cargo.name} ${cargo.mass})`);
+                    res.send(`Успішно створено вантаж з id ${cargo.id}`);
                 }
             });
         }
@@ -63,7 +86,7 @@ router.put('/', function (req, res) {
             res.send(e);
         } else {
             // res.redirect(`/${cargo.id}`);
-            res.send(`Successfully updated cargo with id [${cargo.id}]`);
+            res.send(`Успішно оновлено вантаж з id [${cargo.id}]`);
         }
     });
 });
@@ -77,7 +100,7 @@ router.delete('/:id', function (req, res) {
         if (e) {
             res.send(e);
         } else {
-            res.send(`Successfully deleted cargo with id ${cargoId}`);
+            res.send(`Успішно видалено вантаж з id ${cargoId}`);
         }
     });
 });

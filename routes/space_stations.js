@@ -11,13 +11,18 @@ router.get('/', function (req, res) {
     });
 });
 
-// GET /space_stations/{id}
 router.get('/:id', function (req, res) {
     var db = req.db;
     var collection = db.get('space_stations');
-    var spaceStationId = req.params.id;
-    collection.findOne({ id: spaceStationId }, {}, function (e, docs) {
-        res.json(docs);
+    var space_stationsId = req.params.id;
+    console.log(space_stationsId);
+    collection.findOne({ id: space_stationsId }).then(function(space_stationsExists) {
+        if (space_stationsExists) {
+            res.send(`Космічна станція з id ${space_stationsId} існує`);
+        } else{
+            res.send(`Космічної станції з id ${space_stationsId} не існує`);
+        }
+
     });
 });
 
@@ -29,7 +34,7 @@ router.post('/', function (req, res) {
         return !!docs;
     }).then(function(spaceStationExists) {
         if (spaceStationExists) {
-            res.send(`Space Station with id ${req.body.id} already exists`);
+            res.send(`Космічна станція з id ${req.body.id} вже існує`);
         } else{
             var spaceStation = {
                 id: req.body.id,
@@ -42,7 +47,7 @@ router.post('/', function (req, res) {
                     res.send(e);
                 } else {
                     // res.redirect(`/space_stations/${space_station.id}`);
-                    res.send(`Successfully created Space Station [${spaceStation.id}] ${spaceStation.number} ${spaceStation.necessity} ${spaceStation.capacity}`);
+                    res.send(`Успішно створена космічна станція з id ${spaceStation.id}`);
                 }
             });
         }
@@ -64,9 +69,25 @@ router.put('/', function (req, res) {
             res.send(e);
         } else {
             // res.redirect(`/space_stations/${space_station.id}`);
-            res.send(`Successfully updated Space Station with id [${spaceStation.id}]`);
+            res.send(`Успішно відредагована станція з id [${spaceStation.id}]`);
         }
     });
+});
+
+router.post('/:id', function (req, res) {
+    var db = req.db;
+    var collection = db.get('space_stations');
+    var space_stationsId = req.params.id;
+    console.log(space_stationsId);
+    var space_stations = {
+        id: req.body.id,
+        number: req.body.number,
+        necessity: req.body.necessity,
+        capacity: req.body.capacity,
+    }
+    collection.update({ id:space_stationsId  }, { $set: { number: space_stations.number, necessity:space_stations.necessity,capacity:space_stations.capacity } }).then((result) => {
+        res.send(`Успішно відредагована космічна станція з id ${space_stations.id}`);
+    })
 });
 
 // DELETE /space_stations/{id}
@@ -78,7 +99,7 @@ router.delete('/:id', function (req, res) {
         if (e) {
             res.send(e);
         } else {
-            res.send(`Successfully deleted Space Station with id ${spaceStationId}`);
+            res.send(`Успішно видалена космічна станція з id ${spaceStationId}`);
         }
     });
 });

@@ -9,11 +9,12 @@ html
       link(rel="stylesheet" href="/public/css/bootstrap.min.css")
   body
     +nav(Lab3, 'main_menu')
-      +nav_item( '/' ) Home
-      +nav_item( '/passengers' ) Passenger
-      +nav_item( '/trains' ) Trains
-      +nav_item( '/tickets' ) Tickets
-      +nav_item( '/statistics' ) Statistics
+        +nav_item( '/' ) Домашня сторінка
+        +nav_item( '/space_Stations' ) Космічні станції
+        +nav_item( '/planets' ) Планети
+        +nav_item( '/cargos' ) Вантаж
+        +nav_item( '/cargoOnPlanets' ) Доставка вантажу на планету
+        +nav_item( '/cargoOnStations' ) Доставка вантажу на станцію
     div.main.container
         block content
     block scripts

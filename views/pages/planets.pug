@@ -1,34 +1,35 @@
 extends ../layout
 
 block content
-    h3 Passengers
+    h3 Планети
     form(class="form-inline")
         div(class="form-group")
             label ID
             input(type="number" class="form-control" id="inputId")
         div(class="form-group")
-            label Name
+            label Назва
             input(type="text" class="form-control" id="inputName")
         div(class="form-group")
-            label Surname
-            input(type="text" class="form-control" id="inputSurname")
-        button(type="submit" class="btn btn-primary" id="createUserButton") Create passenger
-    table(id="passengersList" class="table table-bordered table-hover")
+            label Маса
+            input(type="number" class="form-control" id="inputMass")
+        div(class="form-group")
+            label Місткість
+            input(type="number" class="form-control" id="inputCapacity")
+    button(type="submit" class="btn btn-primary" id="createUserButton") Додати
+    form(class="form-inline")
+        div(class="form-group")
+            label Знайти за id
+            input(type="number" class="form-control" id="inputWhatToFind")
+        button(type="submit" class="btn btn-primary" id="findUserButton") Знайти
+    table(id="planetsList" class="table table-bordered table-hover")
         thead
             th ID
-            th Name
-            th Surname
-            th Delete
+            th Назва
+            th Маса
+            th Місткість
+            th Видалити
+            th Редагувати
         tbody
-    pre(id="passengerInfo")
-        strong ID: 
-        span(id="passengerInfoId")
-        br
-        strong Name: 
-        span(id="passengerInfoName")
-        br
-        strong Surname: 
-        span(id="passengerInfoSurname")
 
 block append scripts
-    script(src='/public/js/passengers.js')
+    script(src='/public/js/planets.js')

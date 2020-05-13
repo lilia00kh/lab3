@@ -1,42 +1,35 @@
 extends ../layout
 
 block content
-    h3 Cargos
+    h3 Вантаж
     form(class="form-inline")
         div(class="form-group")
             label ID
             input(type="number" class="form-control" id="inputId")
         div(class="form-group")
-            label Code
+            label Код
             input(type="number" class="form-control" id="inputCode")
         div(class="form-group")
-            label Name
+            label Назва
             input(type="text" class="form-control" id="inputName")
         div(class="form-group")
-            label Mass
+            label Маса
             input(type="number" class="form-control" id="inputMass")
-        button(type="submit" class="btn btn-primary" id="createCargoButton") Create Cargo
+        button(type="submit" class="btn btn-primary" id="createCargoButton") Додати
+    form(class="form-inline")
+        div(class="form-group")
+            label Знайти за id
+            input(type="number" class="form-control 1" id="inputWhatToFind")
+        button(type="submit" class="btn btn-primary" id="findUserButton") Знайти
     table(id="cargosList" class="table table-bordered table-hover")
         thead
             th ID
-            th Code
-            th Name
-            th Mass
-            th Delete
+            th Код
+            th Назва
+            th Маса
+            th Видалити
+            th Редагувати
         tbody
-    pre(id="cargoInfo")
-        strong ID:
-        span(id="cargoInfoId")
-        br
-        strong Code:
-        span(id="cargoInfoCode")
-        br
-        strong Name:
-        span(id="cargoInfoName")
-        br
-        strong Mass:
-        span(id="cargoInfoMass")
-        br
 
 block append scripts
     script(src='/public/js/cargos.js')

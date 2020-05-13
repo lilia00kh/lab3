@@ -16,7 +16,6 @@ function fillTable() {
             tableContent += `<td>${this.id}</td>`;
             tableContent += `<td>${this.spaceStation}</td>`;
             tableContent += `<td>${this.cargo}</td>`;
-            tableContent += `<td><button type="button" class="btn btn-danger">Delete</button></td>`
             tableContent += `</tr>`;
         });
         $(`#cargoOnStationsList tbody`).html(tableContent);

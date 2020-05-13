@@ -1,35 +1,34 @@
 extends ../layout
 
 block content
-    h3 Cargo on Planets
+    h3 Вантаж на планетах
     form(class="form-inline")
         div(class="form-group")
             label ID
             input(type="number" class="form-control" id="inputId")
         div(class="form-group")
-            label Planet
+            label Планета
             input(type="text" class="form-control" id="inputPlanet")
         div(class="form-group")
-            label Cargo
+            label Вантаж
             input(type="number" class="form-control" id="inputCargo")
-        button(type="submit" class="btn btn-primary" id="createCargoOnPlanetButton") Create Cargo on Planet
+        button(type="submit" class="btn btn-primary" id="createCargoOnPlanetButton") Додати
     table(id="cargoOnPlanetsList" class="table table-bordered table-hover")
         thead
             th ID
-            th Planet
-            th Cargo
-            th Delete
+            th Планета
+            th Вантаж
         tbody
-    pre(id="cargoOnPlanetInfo")
-        strong ID:
-        span(id="cargoOnPlanetInfoId")
-        br
-        strong Planet:
-        span(id="cargoOnPlanetInfoPlanet")
-        br
-        strong Cargo:
-        span(id="cargoOnPlanetInfoCargo")
-        br
+    button(type="submit" class="btn btn-primary" id="ShowLessThen30") Показати
+    table(id="cargoOnPlanetsListLessThen30" class="table table-bordered table-hover")
+        thead
+            th(id="PlanetId") ID
+            th(id="PlanetName") Назва
+            th(id="PlanetMass") Маса
+            th(id="PlanetCapacity") Місткість
+        tbody
+
 
 block append scripts
     script(src='/public/js/cargoOnPlanets.js')
+    script(src='/public/js/cargoOnPlanetsLessThen30.js')

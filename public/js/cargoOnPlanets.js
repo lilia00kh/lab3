@@ -2,7 +2,8 @@ $(document).ready(function() {
     fillTable();
     $(`#createCargoOnPlanetButton`).on(`click`, createCargoOnPlanet);
     $(`#cargoOnPlanetsList tbody`).on('click', 'tr button.btn-danger', deleteCargoOnPlanet);
-    $(`#cargoOnPlanetsList tbody`).on('click', 'tr', showCargoOnPlanetInfo);
+    $(`#ShowLessThen30`).on('click', showLessThen30);
+    //$(`#cargoOnPlanetsListLessThen30 tbody`).on(showCargoOnPlanetInfo);
 });
 
 function fillTable() {
@@ -16,11 +17,23 @@ function fillTable() {
             tableContent += `<td>${this.id}</td>`;
             tableContent += `<td>${this.planet}</td>`;
             tableContent += `<td>${this.cargo}</td>`;
-            tableContent += `<td><button type="button" class="btn btn-danger">Delete</button></td>`
             tableContent += `</tr>`;
         });
         $(`#cargoOnPlanetsList tbody`).html(tableContent);
     });
+}
+
+function fillTable2(result) {
+    let tableContent = '';
+        result.forEach((value)=>{
+            tableContent += `<tr id="${this.id}">`;
+            tableContent += `<td>${value.id}</td>`;
+            tableContent += `<td>${value.name}</td>`;
+            tableContent += `<td>${value.mass}</td>`;
+            tableContent += `<td>${value.capacity}</td>`;
+            tableContent += `</tr>`;
+            $(`#cargoOnPlanetsListLessThen30 tbody`).html(tableContent);
+        })
 }
 
 function createCargoOnPlanet(event) {
@@ -53,13 +66,26 @@ function showCargoOnPlanetInfo(event) {
     });
 }
 
+function showLessThen30(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    let i =30;
+    $.ajax({
+        url: `/service/cargoOnPlanets/${i}`,
+        type: `POST`,
+        success: function(result) {
+            fillTable2(result);
+        }
+    });
+}
+
 function deleteCargoOnPlanet(event) {
     event.preventDefault();
     event.stopImmediatePropagation();
     let data = $(this).parent().parent();
     let id = $(data).find(`td:nth-child(1)`).text();
     let planet = $(data).find(`td:nth-child(2)`).text();
-    if (confirm(`Are you sure you want to delete cargo on [${id}] ${planet}?`)) {
+    if (confirm(` [${id}] ${planet}?`)) {
         $.ajax({
             url: `/service/cargoOnPlanets/${id}`,
             type: `DELETE`,

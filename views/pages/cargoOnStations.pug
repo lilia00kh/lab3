@@ -1,35 +1,24 @@
 extends ../layout
 
 block content
-    h3 Cargo on Stations
+    h3 Вантаж на станціях
     form(class="form-inline")
         div(class="form-group")
             label ID
             input(type="number" class="form-control" id="inputId")
         div(class="form-group")
-            label Station
+            label Станція
             input(type="text" class="form-control" id="inputSpaceStation")
         div(class="form-group")
-            label Cargo
+            label Вантаж
             input(type="number" class="form-control" id="inputCargo")
-        button(type="submit" class="btn btn-primary" id="createCargoOnStationButton") Create Cargo on Station
+        button(type="submit" class="btn btn-primary" id="createCargoOnStationButton") Додати
     table(id="cargoOnStationsList" class="table table-bordered table-hover")
         thead
             th ID
-            th Space Station
-            th Cargo
-            th Delete
+            th Станція
+            th Вантаж
         tbody
-    pre(id="cargoOnStationInfo")
-        strong ID:
-        span(id="cargoOnStationInfoId")
-        br
-        strong Space Station:
-        span(id="cargoOnStationInfoSpaceStation")
-        br
-        strong Cargo:
-        span(id="cargoOnStationInfoCargo")
-        br
 
 block append scripts
     script(src='/public/js/cargoOnStations.js')
